@@ -13,7 +13,11 @@ namespace csharp_ticketmaster.Models
       Title = title;
       Description = description;
     }
-    // public string GetTemplate();
+    public string GetTemplate()
+    {
+      string template = $"Tite: {Title} : Description: {Description}";
+      return template;
+    }
 
 
 

@@ -1,4 +1,5 @@
 using System;
+using csharp_ticketmaster.Models;
 using csharp_ticketmaster.Services;
 
 namespace csharp_ticketmaster.Controllers
@@ -20,12 +21,21 @@ namespace csharp_ticketmaster.Controllers
     {
       Console.Clear();
       Console.WriteLine("Welcome to Ticket-master\n");
+      Console.WriteLine("Number \t Title");
+      Console.WriteLine("------------------");
       foreach (string message in _ticketService.Messages)
       {
         Console.WriteLine(message);
 
       }
       _ticketService.Messages.Clear();
+      int index = 0;
+      foreach (Ticket ticket in _ticketService.Tickets)
+      {
+
+        index++;
+        Console.WriteLine($"{index} \t {ticket.Title}");
+      }
     }
     private void GetUserInput()
     {
@@ -37,16 +47,51 @@ namespace csharp_ticketmaster.Controllers
           Environment.Exit(0);
           break;
         case "view":
-          _ticketService.Messages.Add("please select a ticket to view");
-
+          ViewTicket();
           break;
         case "new":
-          _ticketService.Messages.Add("please add in a new ticket");
+          NewTicket();
           break;
-
       }
+      //   for (int i = 0; i < _ticketService.Tickets.Count; i++)
+      //   {
+      //     string title = _ticketService.Tickets[i].Title;
+      //     Console.WriteLine($"{i + 1} {title}");
+      //   }
 
     }
 
+    private void NewTicket()
+    {
+      Console.WriteLine("Title: ");
+      string title = Console.ReadLine();
+      Console.WriteLine("Description: ");
+      string description = Console.ReadLine();
+      _ticketService.CreateTicket(title, description);
+
+    }
+
+    private void ViewTicket()
+    {
+      Console.WriteLine("Please select a number to view");
+      if (int.TryParse(Console.ReadLine(), out int index))
+      {
+        Ticket ticket = _ticketService.View(index - 1);
+        Console.Clear();
+        Console.WriteLine($"Title: {ticket.Title} \n Description: {ticket.Description}");
+        Console.WriteLine("select R to return to mian menu or Q to quit");
+        string input = Console.ReadLine().ToLower();
+        switch (input)
+        {
+          case "r":
+            Run();
+            break;
+          case "q":
+            Environment.Exit(0);
+            break;
+        }
+        Console.ReadLine();
+      }
+    }
   }
 }
