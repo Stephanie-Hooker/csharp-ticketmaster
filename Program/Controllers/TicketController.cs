@@ -53,11 +53,6 @@ namespace csharp_ticketmaster.Controllers
           NewTicket();
           break;
       }
-      //   for (int i = 0; i < _ticketService.Tickets.Count; i++)
-      //   {
-      //     string title = _ticketService.Tickets[i].Title;
-      //     Console.WriteLine($"{i + 1} {title}");
-      //   }
 
     }
 
